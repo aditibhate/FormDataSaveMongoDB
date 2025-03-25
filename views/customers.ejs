@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Customer List</title>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+</head>
+<body>
+<h1>Customer List</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% customers.forEach(function(customer) { %>
+    <tr>
+      <td><%= customer.name %></td>
+      <td><%= customer.email %></td>
+    </tr>
+  <% }); %>
+  </tbody>
+</table>
+
+<a href="/">⬅ Back to Home</a>
+</body>
+</html>

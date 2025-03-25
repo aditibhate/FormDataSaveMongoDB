@@ -1,7 +1,7 @@
 //import uri from './databaseConnection.js';
 //the databaseConnection.js is inside the same controllers folder and ONLY has one line the connectivity uri
 // to connect your NodeJS code to YOUR MongoDB instance
-// module.exports = { uri: 'mongodb+srv://YOUR_Login:YOUR_Password@cluster0.WHATEVER.mongodb.net/?retryWrites=true&w=majority' };
+//module.exports = { uri: 'mongodb+srv://username:password@cluster0.ppv6j.mongodb.net/?retryWrites=true&w=majority' };
 
 
 var { uri } = require('./databaseConnection');
@@ -39,7 +39,9 @@ module.exports.saveNewCustomer =  function(req, res, next) {
     saveCustomerToMongoDB(value_name, value_email);
 
     //step 2.3 Send a response welcoming the new user
-    res.send("Welcome,  " + value_name + "</br> We will reach you at: " + value_email);
+    res.send("Welcome, " + value_name + "<br>We will reach you at: " + value_email);
+
+
 
 };
 
@@ -80,7 +82,26 @@ async function saveCustomerToMongoDB(name, email) {
 
 
     } finally {
-    // STEP F: Ensures that the client will close when you finish/error
-    await client.close();
+        // STEP F: Ensures that the client will close when you finish/error
+        await client.close();
     }
 }
+
+// Add this at the bottom of your database.js file
+
+module.exports.getAllCustomers = async function () {
+    try {
+        await client.connect();
+        const db0 = client.db("shoppingsite");
+        const customersCollection = db0.collection('customers');
+
+        const customers = await customersCollection.find({}).toArray();
+        return customers;
+    } catch (err) {
+        console.error("Error fetching customers:", err);
+        return [];
+    } finally {
+        await client.close();
+    }
+};
+
